@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axiosAll from "../../other/axiosAll";
 import { Form, Input, Button } from "antd";
-import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const AddProduct = () => {

@@ -3,7 +3,7 @@ import React from "react";
 import User from "./components/User/User";
 import Product from "./components/Product/Product";
 import { Routes, Route } from "react-router-dom";
-import Chart from "./components/Chart/Chart";
+// import Chart from "./components/Chart/Chart";
 import AddProduct from "./components/Product/AddProduct";
 import AddUser from "./components/User/AddUser";
 import Order from "./components/Order/Order";
@@ -36,7 +36,7 @@ const App = () => {
           <Route path="order" element={<Order />} />
           <Route path="blog" element={<Blog />} />
           <Route path="blog/addnewblog" element={<Addblog />} />
-          <Route path="chart" element={<Chart />} />
+          {/* <Route path="chart" element={<Chart />} /> */}
         </Route>
       </Route>
       <Route path="login" element={<Login />} />

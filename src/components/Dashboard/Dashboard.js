@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Card } from "antd";
 import "./dashboard.css";
-import Chart from "../Chart/Chart";
+// import Chart from "../Chart/Chart";
 import axiosAll from "../../other/axiosAll";
 import Notification from "../Notification/Notification";
 
@@ -198,7 +198,7 @@ const Dashboard = () => {
           <Notification />
         </Col>
         <Col span={16} className="chart">
-          <Chart />
+          {/* <Chart /> */}
         </Col>
       </Row>
     </>

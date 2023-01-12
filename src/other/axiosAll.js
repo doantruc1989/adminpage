@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const config = {
-  baseURL: "https://quocson.fatcatweb.top/",
+  baseURL: "http://localhost:3006/",
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 };
