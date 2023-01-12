@@ -1,40 +1,38 @@
 import React, { useEffect, useState } from "react";
+import axiosAll from "../../other/axiosAll";
 import { Pagination, Table, Form, Input, Button, Modal } from "antd";
 import { SaveOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import axiosAll from "../../other/axiosAll";
 
-// const baseURL =
-const User = () => {
-  const [users, setUsers] = useState([]);
+const Category = () => {
+  const [categories, setCategories] = useState([]);
   const [currentPage, setcurrentPage] = useState(1);
   const [editingRow, setEditingRow] = useState(null);
   const [form] = Form.useForm();
 
   useEffect(() => {
     try {
-      axiosAll.get(`/admin?page=${currentPage}`).then((response) => {
-        setUsers(
+      axiosAll.get(`/listcategory`).then((response) => {
+        setCategories(
           response.data.map((row) => ({
             id: row.id,
-            username: row.username,
-            role: row.role,
+            category: row.category,
             image: row.image,
-            email: row.email,
+            parentId: row.parentId,
+            path: row.path,
           }))
         );
       });
     } catch (error) {
       console.log(error);
     }
-  }, [currentPage, users]);
+  }, [currentPage, categories]);
 
   const columns = [
     {
       title: "id",
       dataIndex: "id",
       width: 50,
-      responsive: ["sm"],
       render: (text, record) => {
         if (editingRow === record.id) {
           return (
@@ -48,29 +46,14 @@ const User = () => {
       },
     },
     {
-      title: "UserName",
-      dataIndex: "username",
-      width: "auto",
+      title: "Category",
+      dataIndex: "category",
+      ellipsis: true,
+      width: 80,
       render: (text, record) => {
         if (editingRow === record.id) {
           return (
-            <Form.Item name="username">
-              <Input />
-            </Form.Item>
-          );
-        } else {
-          return <p>{text}</p>;
-        }
-      },
-    },
-    {
-      title: "Role",
-      dataIndex: "role",
-      width: "auto",
-      render: (text, record) => {
-        if (editingRow === record.id) {
-          return (
-            <Form.Item name="role">
+            <Form.Item name="category">
               <Input />
             </Form.Item>
           );
@@ -82,9 +65,10 @@ const User = () => {
     {
       title: "Image",
       dataIndex: "image",
-      ellipsis: true,
       width: "auto",
+      responsive: ["xs"],
       responsive: ["sm"],
+      responsive: ["md"],
       render: (text, record) => {
         if (editingRow === record.id) {
           return (
@@ -98,14 +82,14 @@ const User = () => {
       },
     },
     {
-      title: "Email",
-      dataIndex: "email",
+      title: "ParentId",
+      dataIndex: "parentId",
       ellipsis: true,
-      width: "auto",
+      width: 50,
       render: (text, record) => {
         if (editingRow === record.id) {
           return (
-            <Form.Item name="email">
+            <Form.Item name="parentId">
               <Input />
             </Form.Item>
           );
@@ -115,7 +99,24 @@ const User = () => {
       },
     },
     {
-      title: "Actions",
+      title: "Path",
+      dataIndex: "path",
+      ellipsis: true,
+      width: 80,
+      render: (text, record) => {
+        if (editingRow === record.id) {
+          return (
+            <Form.Item name="path">
+              <Input />
+            </Form.Item>
+          );
+        } else {
+          return <p>{text}</p>;
+        }
+      },
+    },
+    {
+      title: "Action",
       render: (_, record) => {
         return (
           <>
@@ -125,10 +126,10 @@ const User = () => {
                 setEditingRow(record.id);
                 form.setFieldsValue({
                   id: record.id,
-                  username: record.username,
-                  role: record.role,
+                  category: record.category,
                   image: record.image,
-                  email: record.email,
+                  parentId: record.parentId,
+                  path: record.path,
                 });
               }}
             >
@@ -141,13 +142,13 @@ const User = () => {
               type="link"
               onClick={() => {
                 Modal.confirm({
-                  title: "Are you sure to delete this user record?",
+                  title: "Are you sure to delete this Category record?",
                   okText: "Yes",
                   okType: "danger",
                   onOk: () => {
                     setEditingRow(record.id);
                     try {
-                      axiosAll.delete(`/admin/deleteUser/${record.id}`);
+                      axiosAll.delete(`/category/${record.id}`);
                     } catch (error) {
                       console.log(error);
                     }
@@ -168,11 +169,11 @@ const User = () => {
   };
 
   const onFinish = (values) => {
-    const updatedDataSource = [...users];
-    setUsers(updatedDataSource);
+    const updatedDataSource = [...categories];
+    setCategories(updatedDataSource);
     setEditingRow(null);
     try {
-      axiosAll.put(`/admin/editUser/${values.id}`, values);
+      axiosAll.post(`/category/${values.id}`, values);
     } catch (error) {
       console.log(error);
     }
@@ -180,22 +181,23 @@ const User = () => {
 
   return (
     <div>
-      <h1 className="mb-5 text-xl">User Table</h1>
+      <h1 className="mb-5 text-xl">Category Table</h1>
       <Button className="login-form-button">
-        <Link to="addnewUser">Add new User</Link>
+        <Link to="addnewcategory">Add new Category</Link>
       </Button>
       <Form form={form} onFinish={onFinish}>
         <Table
           bordered
           className="mt-5"
           columns={columns}
-          dataSource={users}
+          dataSource={categories}
           pagination={false}
         />
       </Form>
-      {/* {users.map((user, index) => (
+
+      {/* {products.map((product, index) => (
                 <div key={index}>
-                    {user.username}
+                    {product.productName}
                 </div>
             ))} */}
 
@@ -210,4 +212,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Category;

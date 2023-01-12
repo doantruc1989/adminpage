@@ -1,63 +1,17 @@
-.site-layout {
-  background-color: var(--pink) !important;
-}
-
 .navbar {
-  background-color: #001529 !important;
-  color: white;
-
+ background-color: #001529;
 }
 
-.trigger {
-  font-size: x-large;
-}
-
-.logo {
-  margin: 30px;
+.menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
-
+  gap: 15x;
 }
 
-.logo img {
-  width: 100%;
+.menu .menuItem:hover {
+  background-color: gray !important;
 }
-
-.navbar__username {
-  display: flex;
-  justify-content: space-around;
-  align-items: baseline;
-}
-
-.navbar__username p {
-  font-size: 20px;
-}
-
-/* .menu {
-  background-color: var(--pink) !important;
-}
-
-.menuItem:active {
-  background-color: var(--activeItem) !important;
+/* 
+.dashboardsales {
+  background-color: #4976E7 !important;
 } */
-
-.menuItem {
-  margin-top: 30px;
-  gap: 10px;
-  font-size: 18px;
-  color: var(--gray);
-  display: flex;
-  align-items: center;
-}
-
-@media (max-width:991px) {}
-
-@media (max-width:768px) {
-  .Cards {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media (max-width:450px) {}
